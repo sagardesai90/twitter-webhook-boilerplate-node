@@ -3,7 +3,7 @@ var request = require('request')
 
 
 // load config
-nconf.file({ file: 'config.json' }).env()
+nconf.file({ file: '../../config.json' }).env()
 
 // twitter authentication
 var twitter_oauth = {
@@ -13,7 +13,7 @@ var twitter_oauth = {
   token_secret: nconf.get('TWITTER_ACCESS_TOKEN_SECRET')
 }
 
-var WEBHOOK_URL = 'https://your-webhook-url'
+var WEBHOOK_URL = 'https://mysterious-tundra-36576.herokuapp.com/webhooks/twitter'
 
 
 // request options
@@ -31,4 +31,7 @@ var request_options = {
 // POST request to create webhook config
 request.post(request_options, function (error, response, body) {
   console.log(body)
+  console.log(error)
+  console.log(response)
+  console.log(WEBHOOK_URL)
 })

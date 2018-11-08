@@ -5,7 +5,7 @@ var security = require('./security')
 var message_processor = require('./message-processor')
 var twitter = require('./twitter')
 
-app.set('port', (process.env.PORT || 5000));
+app.set('port', (process.env.PORT || 8000));
 
 app.use(express.static(__dirname + '/public'))
 app.use(bodyParser.json())
@@ -32,10 +32,10 @@ app.get('/', function(request, response) {
 app.get('/webhooks/twitter', function(request, response) {
 
   var crc_token = request.query.crc_token
-
   if (crc_token) {
+    console.log(crc_token);
     var hash = security.get_challenge_response(crc_token, twitter.oauth.consumer_secret)
-
+    
     response.status(200);
     response.send({
       response_token: 'sha256=' + hash
@@ -43,6 +43,8 @@ app.get('/webhooks/twitter', function(request, response) {
   } else {
     response.status(400);
     response.send('Error: crc_token missing from request.')
+    console.log("hello there")
+    console.log(request.query.crc_token)
   }
 })
 
